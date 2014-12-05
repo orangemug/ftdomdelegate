@@ -2,9 +2,8 @@
 
 It's a fork of [ftdomdelegate](https://github.com/ftlabs/ftdomdelegate) with a few extra features planned
 
- * Scoped selectors
+ * [done] Scoped selectors
  * Moving away from buster to mocha
- * Simplify the code a little with some better documentation
  * Match the API of other delegate libraries better
  * Proof that its tested in the browsers listed (saucelabs)
 
@@ -15,11 +14,8 @@ domdelegate is a simple, easy-to-use component for binding to events on all targ
 ## Install
 Get the [browserify](http://browserify.org/)-able source from a package manager:
 
-    npm install dom-delegate
+    npm install git://github.com/orangemug/domdelegate.git
 
-or
-
-    bower install dom-delegate
 
 
 ## Usage
@@ -99,6 +95,8 @@ The event to listen for e.g. `mousedown`, `mouseup`, `mouseout`, `error`, `click
 #### `selector (string)`
 
 Any kind of valid CSS selector supported by [`matchesSelector`](http://caniuse.com/matchesselector). Some selectors, like `#id` or `tag` will use optimized functions internally that check for straight matches between the ID or tag name of elements.
+
+You can also use a direct child selector, which uses the same format as jquery `> childselector`. *Note* this isn't supported by the native querySelector yet so its a slower than the other selectors.
 
 `null` is also accepted and will match the root element set by `root()`.  Passing a handler function into `.on`'s second argument is equivalent to `.on(eventType, null, handler)`.
 
