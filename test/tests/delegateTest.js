@@ -145,6 +145,7 @@ buster.testCase('Delegate', {
     });
 
     element = document.getElementById('delegate-test-clickable');
+    console.log("setupHelper", setupHelper);
     element.dispatchEvent(setupHelper.getMouseEvent('click'));
 
     element = document.getElementById('delegate-test-inner-clickable');
@@ -168,6 +169,7 @@ buster.testCase('Delegate', {
     });
 
     element = container1El.querySelector('.delegate-test-clickable');
+    console.log("setupHelper", setupHelper);
     element.dispatchEvent(setupHelper.getMouseEvent('click'));
 
     delegate.root(container2El);
