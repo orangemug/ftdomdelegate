@@ -645,4 +645,85 @@ describe("domdelgate", function() {
     assert.equal(bubbleSpy.callCount, 1);
   });
 
+  describe("scroll", function() {
+    beforeEach(function() {
+      var snip = '<p>text</p>';
+      var out = '';
+      for (var i = 0, l = 10000; i < l; i++) {
+        out += snip;
+      }
+      document.body.insertAdjacentHTML('beforeend', '<div id="el">'+out+'</div>');
+      window.scrollTo(0, 0);
+    });
+
+    afterEach(function() {
+      var el = document.getElementById('el');
+      el.parentNode.removeChild(el);
+    });
+
+    it('Test scroll event', function() {
+      var promise = {
+        then: function (callback) {
+          this.callbacks = this.callbacks || [];
+          this.callbacks.push(callback);
+        }
+      };
+
+      var delegate = new Delegate(document);
+      var windowDelegate = new Delegate(window);
+      var spyA = sinon.spy();
+      var spyB = sinon.spy();
+      delegate.on('scroll', spyA);
+      windowDelegate.on('scroll', spyB);
+
+      // Scroll events on some browsers are asynchronous
+      window.setTimeout(function() {
+        assert.calledOnce(spyA);
+        assert.calledOnce(spyB);
+        delegate.destroy();
+        windowDelegate.destroy();
+
+        callbacks = promise.callbacks || [];
+        for (var i = 0, l = callbacks.length; i < l; ++i) {
+          callbacks[i]();
+        }
+      }, 100);
+      window.scrollTo(0, 100);
+      return promise;
+    });
+
+    it('Test sub-div scrolling', function() {
+      var promise = {
+        then: function (callback) {
+          this.callbacks = this.callbacks || [];
+          this.callbacks.push(callback);
+        }
+      };
+
+      var delegate = new Delegate(document);
+      var el = document.getElementById('el');
+      el.style.height = '100px';
+      el.style.overflow = 'scroll';
+
+      var spyA = sinon.spy();
+      delegate.on('scroll', '#el', spyA);
+
+      // Scroll events on some browsers are asynchronous
+      window.setTimeout(function() {
+        assert.calledOnce(spyA);
+        delegate.destroy();
+
+        callbacks = promise.callbacks || [];
+        for (var i = 0, l = callbacks.length; i < l; ++i) {
+          callbacks[i]();
+        }
+      }, 100);
+      var event = document.createEvent("MouseEvents");
+      event.initMouseEvent('scroll', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      el.dispatchEvent(event);
+      return promise;
+    });
+  });
+
 });
+
