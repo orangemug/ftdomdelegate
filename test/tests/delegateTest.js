@@ -162,10 +162,10 @@ buster.testCase('Delegate', {
     });
 
     element = document.getElementById('delegate-test-clickable');
-    element.dispatchEvent(setupHelper.getMouseEvent('click'));
+    setupHelper.fireMouseEvent(element, 'click');
 
     element = document.getElementById('delegate-test-inner-clickable');
-    element.dispatchEvent(setupHelper.getMouseEvent('click'));
+    setupHelper.fireMouseEvent(element, 'click');
 
     assert.calledTwice(spy1);
     assert.calledOnce(spy2);
@@ -185,12 +185,12 @@ buster.testCase('Delegate', {
     });
 
     element = container1El.querySelector('.delegate-test-clickable');
-    element.dispatchEvent(setupHelper.getMouseEvent('click'));
+    setupHelper.fireMouseEvent(element, 'click');
 
     delegate.root(container2El);
 
     element = container2El.querySelector('.delegate-test-clickable');
-    element.dispatchEvent(setupHelper.getMouseEvent('click'));
+    setupHelper.fireMouseEvent(element, 'click');
 
     assert.calledTwice(spy);
 
