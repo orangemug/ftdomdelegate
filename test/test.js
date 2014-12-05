@@ -28,7 +28,15 @@ describe("domdelgate", function() {
   });
 
   afterEach(function() {
-    document.body.innerHTML = "";
+    var toRemove;
+    toRemove = document.getElementById('container1');
+    if (toRemove) {
+      toRemove.parentNode.removeChild(toRemove);
+    }
+    toRemove = document.getElementById('container2');
+    if (toRemove) {
+      toRemove.parentNode.removeChild(toRemove);
+    }
   });
 
 
@@ -661,7 +669,7 @@ describe("domdelgate", function() {
       el.parentNode.removeChild(el);
     });
 
-    it('Test scroll event', function() {
+    it('Test scroll event', function(done) {
       var promise = {
         then: function (callback) {
           this.callbacks = this.callbacks || [];
@@ -678,8 +686,8 @@ describe("domdelgate", function() {
 
       // Scroll events on some browsers are asynchronous
       window.setTimeout(function() {
-        assert.calledOnce(spyA);
-        assert.calledOnce(spyB);
+        assert.equal(spyA.callCount, 1);
+        assert.equal(spyB.callCount, 1);
         delegate.destroy();
         windowDelegate.destroy();
 
@@ -687,9 +695,9 @@ describe("domdelgate", function() {
         for (var i = 0, l = callbacks.length; i < l; ++i) {
           callbacks[i]();
         }
+        done();
       }, 100);
       window.scrollTo(0, 100);
-      return promise;
     });
 
     it('Test sub-div scrolling', function() {
@@ -710,7 +718,7 @@ describe("domdelgate", function() {
 
       // Scroll events on some browsers are asynchronous
       window.setTimeout(function() {
-        assert.calledOnce(spyA);
+        assert.equal(spyA.callCount, 1);
         delegate.destroy();
 
         callbacks = promise.callbacks || [];
