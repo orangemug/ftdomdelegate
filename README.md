@@ -17,15 +17,10 @@ Get the [browserify](http://browserify.org/)-able source from a package manager:
     npm install git://github.com/orangemug/domdelegate.git
 
 
-
 ## Usage
 The library is written in CommonJS and so can either be `require` in or the prebuilt wzrd.in version can be used, which makes the API available via `window.domDelegate.Delegate`.
 
-    var delegate, Delegate, myDel;
-
-    Delegate = require('dom-delegate').Delegate;
-    myDel = new Delegate(document.body);
-
+    var Delegate = require('dom-delegate').Delegate;
 
 The script must be loaded prior to instantiating a Delegate object.
 
@@ -49,39 +44,24 @@ To instantiate Delegate on the `body` and listen to some events:
 
     }, false);
 
-A cool trick to handle images that fail to load:
-
-    function handleImageFail() {
-      this.style.display = 'none';
-    }
-
-    window.addEventListener('load', function() {
-      var delegate = new Delegate(document.body);
-      delegate.on('error', 'img', handleImageFail);
-    }, false);
-
-Note: as of 0.1.2 you do not need to provide a DOM element at the point of instantiation, it can be set later via the `root` method.
-
-Also note: as of 0.2.0 you cannot specify more than one `eventType` in a single call to `off` or `on`.
-
 
 ## Tests
-Tests are run using [buster](http://docs.busterjs.org/en/latest/) and sit in `test/`. To run the tests statically:
+Tests are run using [buster](http://docs.busterjs.org/en/latest/) and sit in `test/` directory. To run the tests get yourself [node.js](http://nodejs.org/) and run
 
-    $ cd ftdomdelegate/
-    $ ./node_modules/.bin/buster-static -c test/buster.js
-    Starting server on http://localhost:8282/
+    npm install
 
-...then point your browser to http://localhost:8282/.
+Then start a buster server
 
     $ ./node_modules/.bin/buster-server
     buster-server running on http://localhost:1111
 
-Point your browser to http://localhost:1111 and capture it, then in another terminal tab:
+Point your browser to <http://localhost:1111> and capture it, then in another terminal tab run
 
-    $ ./node_modules/.bin/buster-test -c test/buster.js
+    npm test
 
 Code coverage is generated automatically with [istanbul](https://github.com/gotwarlost/istanbul).  The report outputs to `lcov-report/index.html`.
+
+**NOTE:** This is a pain, and will soon be moving over to another test runner.
 
 
 ## API
