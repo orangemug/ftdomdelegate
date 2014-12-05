@@ -59,13 +59,13 @@ describe("domdelgate", function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.on('click', '#delegate-test-clickable', spy);
 
     element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
 
     delegate.off();
   });
@@ -74,7 +74,7 @@ describe("domdelgate", function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.on('click', '#delegate-test-clickable', spy);
 
     delegate.destroy();
@@ -82,14 +82,14 @@ describe("domdelgate", function() {
     element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    refute.called(spy);
+    assert(!spy.called);
   });
 
   it('Tag selectors are supported', function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.on('click', 'div', function (event) {
       spy();
       return false;
@@ -98,7 +98,7 @@ describe("domdelgate", function() {
     element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
 
     delegate.off();
   });
@@ -107,7 +107,7 @@ describe("domdelgate", function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.on('click', 'circle', function (event) {
       spy();
       return false;
@@ -116,7 +116,7 @@ describe("domdelgate", function() {
     element = document.getElementById('svg-delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
 
     delegate.off();
   });
@@ -125,8 +125,8 @@ describe("domdelgate", function() {
     var delegate, spy1, spy2, element;
     var containerEl = document.getElementById("container1");
 
-    spy1 = this.spy();
-    spy2 = this.spy();
+    spy1 = sinon.spy();
+    spy2 = sinon.spy();
 
     delegate = new Delegate(containerEl);
     delegate.on('click', '> #delegate-test-clickable', function (event) {
@@ -143,8 +143,8 @@ describe("domdelgate", function() {
     element = document.getElementById('delegate-test-inner-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.calledTwice(spy1);
-    assert.calledOnce(spy2);
+    assert.equal(spy1.callCount, 2);
+    assert.equal(spy2.callCount, 1);
 
     delegate.off();
   });
@@ -154,7 +154,7 @@ describe("domdelgate", function() {
     var container1El = document.getElementById("container1");
     var container2El = document.getElementById("container2");
 
-    spy = this.spy();
+    spy = sinon.spy();
 
     delegate = new Delegate(container1El);
     delegate.on('click', '> .delegate-test-clickable', function (event) {
@@ -169,7 +169,7 @@ describe("domdelgate", function() {
     element = container2El.querySelector('.delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.calledTwice(spy);
+    assert.equal(spy.callCount, 2);
 
     delegate.off();
   });
@@ -178,13 +178,13 @@ describe("domdelgate", function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.on('click', '.delegate-test-clickable', spy);
 
     element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
 
     delegate.off();
   });
@@ -193,22 +193,22 @@ describe("domdelgate", function() {
     var delegate, spyA, spyB, element;
 
     delegate = new Delegate(document);
-    spyA = this.spy();
-    spyB = this.spy();
+    spyA = sinon.spy();
+    spyB = sinon.spy();
     delegate.on('click', 'div.delegate-test-clickable, div[id=another-delegate-test-clickable]', spyA);
     delegate.on('click', 'div.delegate-test-clickable + #another-delegate-test-clickable', spyB);
 
     element = document.getElementById('another-delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(spyA);
-    assert.calledOnce(spyB);
+    assert.equal(spyA.callCount, 1);
+    assert.equal(spyB.callCount, 1);
 
     delegate.off();
   });
   it('If two click handlers are registered then all handlers should be called on click' , function() {
     var delegate = new Delegate(document);
-    var spyA = this.spy(), spyB = this.spy();
+    var spyA = sinon.spy(), spyB = sinon.spy();
 
     delegate.on("click", '#delegate-test-clickable', spyA);
     delegate.on("click", '#delegate-test-clickable', spyB);
@@ -216,8 +216,8 @@ describe("domdelgate", function() {
     var element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, "click");
 
-    assert.calledOnce(spyA);
-    assert.calledOnce(spyB);
+    assert.equal(spyA.callCount, 1);
+    assert.equal(spyB.callCount, 1);
 
     delegate.off();
   });
@@ -225,7 +225,7 @@ describe("domdelgate", function() {
   it('Returning false from a callback should stop propagation immediately', function() {
     var delegate = new Delegate(document);
 
-    var spyA = this.spy(), spyB = this.spy();
+    var spyA = sinon.spy(), spyB = sinon.spy();
 
     delegate.on("click", '#delegate-test-clickable', function() {
       spyA();
@@ -238,8 +238,8 @@ describe("domdelgate", function() {
     var element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, "click");
 
-    assert.calledOnce(spyA);
-    refute.calledOnce(spyB);
+    assert.equal(spyA.callCount, 1);
+    assert.notEqual(spyB.callCount, 1);
 
     delegate.off();
   });
@@ -247,7 +247,7 @@ describe("domdelgate", function() {
   it('Returning false from a callback should preventDefault', function(done) {
     var delegate = new Delegate(document.body);
 
-    var spyA = this.spy();
+    var spyA = sinon.spy();
 
     delegate.on("click", '#delegate-test-clickable', function(event) {
       spyA();
@@ -260,7 +260,7 @@ describe("domdelgate", function() {
       };
 
       setTimeout(function() {
-        assert.equals(defaultPrevented, true);
+        assert.equal(defaultPrevented, true);
         done();
       }, 0);
 
@@ -270,14 +270,14 @@ describe("domdelgate", function() {
     var element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, "click");
 
-    assert.calledOnce(spyA);
+    assert.equal(spyA.callCount, 1);
     delegate.off();
   });
 
   it('Returning false from a callback should stop propagation globally', function() {
     var delegateA = new Delegate(document), delegateB = new Delegate(document);
 
-    var spyA = this.spy(), spyB = this.spy();
+    var spyA = sinon.spy(), spyB = sinon.spy();
 
     delegateA.on("click", '#delegate-test-clickable', function() {
       spyA();
@@ -290,8 +290,8 @@ describe("domdelgate", function() {
     var element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, "click");
 
-    assert.calledOnce(spyA);
-    refute.calledOnce(spyB);
+    assert.equal(spyA.callCount, 1);
+    assert.notEqual(spyB.callCount, 1);
 
     delegateA.off();
     delegateB.off();
@@ -299,23 +299,23 @@ describe("domdelgate", function() {
 
   it('Clicking on parent node should not trigger event' , function() {
     var delegate = new Delegate(document);
-    var spy = this.spy();
+    var spy = sinon.spy();
 
     delegate.on("click", "#delegate-test-clickable", spy);
 
     fireMouseEvent(document, "click");
 
-    refute.called(spy);
+    assert(!spy.called);
 
-    var spyA = this.spy();
+    var spyA = sinon.spy();
 
     delegate.on("click", "#another-delegate-test-clickable", spyA);
 
     var element = document.getElementById("another-delegate-test-clickable");
     fireMouseEvent(element, "click");
 
-    assert.calledOnce(spyA);
-    refute.calledOnce(spy);
+    assert.equal(spyA.callCount, 1);
+    assert.notEqual(spy.callCount, 1);
 
     delegate.off();
   });
@@ -326,13 +326,14 @@ describe("domdelgate", function() {
       var delegate = new Delegate(document);
       delegate.on("click", '#delegate-test-clickable');
     } catch (e) {
-      assert.match(e, { name: 'TypeError', message: 'Handler must be a type of Function' });
+      assert.equal(e.name, 'TypeError')
+      assert.equal(e.message, 'Handler must be a type of Function');
     }
   });
 
   it('Delegate#off with zero arguments should remove all handlers' , function() {
     var delegate = new Delegate(document);
-    var spyA = this.spy(), spyB = this.spy();
+    var spyA = sinon.spy(), spyB = sinon.spy();
 
     delegate.on('click', '#delegate-test-clickable', spyA);
     delegate.on('click', '#another-delegate-test-clickable', spyB);
@@ -345,8 +346,8 @@ describe("domdelgate", function() {
     fireMouseEvent(element, "click");
     fireMouseEvent(element2, "click");
 
-    refute.called(spyA);
-    refute.called(spyB);
+    assert(!spyA.called);
+    assert(!spyB.called);
 
     spyA.reset();
     spyB.reset();
@@ -354,13 +355,13 @@ describe("domdelgate", function() {
     fireMouseEvent(element, "mouseover", document);
     fireMouseEvent(element2, "mouseover", document);
 
-    refute.called(spyA);
-    refute.called(spyB);
+    assert(!spyA.called);
+    assert(!spyB.called);
   });
 
   it('Regression test: Delegate#off called from a callback should succeed without exception' , function() {
     var delegate = new Delegate(document);
-    var spyA = this.spy();
+    var spyA = sinon.spy();
 
     delegate.on('click', '#delegate-test-clickable', function() {
       spyA();
@@ -369,16 +370,13 @@ describe("domdelgate", function() {
 
     var element = document.getElementById('delegate-test-clickable');
 
-    refute.exception(function() {
-      fireMouseEvent(element, 'click');
-    });
-
-    assert.called(spyA);
+    fireMouseEvent(element, 'click');
+    assert(spyA.called);
   });
 
   it('Delegate#off called from a callback should prevent execution of subsequent callbacks' , function() {
     var delegate = new Delegate(document);
-    var spyA = this.spy(), spyB = this.spy();
+    var spyA = sinon.spy(), spyB = sinon.spy();
 
     delegate.on('click', '#delegate-test-clickable', function() {
       spyA();
@@ -390,13 +388,13 @@ describe("domdelgate", function() {
 
     fireMouseEvent(element, 'click');
 
-    assert.called(spyA);
-    refute.called(spyB);
+    assert(spyA.called);
+    assert(!spyB.called);
   });
 
   it('Can be instantiated without a root node' , function() {
     var delegate = new Delegate();
-    var spyA = this.spy();
+    var spyA = sinon.spy();
     var element = document.getElementById('delegate-test-clickable');
 
     delegate.on('click', '#delegate-test-clickable', function(event) {
@@ -404,13 +402,13 @@ describe("domdelgate", function() {
     });
 
     fireMouseEvent(element, 'click');
-    refute.called(spyA);
+    assert(!spyA.called);
     delegate.off();
   });
 
   it('Can be bound to an element after its event listeners have been set up' , function() {
     var delegate = new Delegate();
-    var spyA = this.spy();
+    var spyA = sinon.spy();
     var element = document.getElementById('delegate-test-clickable');
 
     delegate.on('click', '#delegate-test-clickable', function(event) {
@@ -420,13 +418,13 @@ describe("domdelgate", function() {
     fireMouseEvent(element, 'click');
     delegate.root(document);
     fireMouseEvent(element, 'click');
-    assert.calledOnce(spyA);
+    assert.equal(spyA.callCount, 1);
     delegate.off();
   });
 
   it('Can be unbound from an element' , function() {
     var delegate = new Delegate(document);
-    var spyA = this.spy();
+    var spyA = sinon.spy();
     var element = document.getElementById('delegate-test-clickable');
 
     delegate.on('click', '#delegate-test-clickable', function(event) {
@@ -435,12 +433,12 @@ describe("domdelgate", function() {
 
     delegate.root();
     fireMouseEvent(element, 'click');
-    refute.called(spyA);
+    assert(!spyA.called);
     delegate.off();
   });
 
   it('Can be to bound to a different DOM element', function () {
-    var spyA = this.spy();
+    var spyA = sinon.spy();
     var element = document.getElementById('element-in-container2-test-clickable');
 
     // Attach to the first container
@@ -455,7 +453,7 @@ describe("domdelgate", function() {
     fireMouseEvent(element, 'click');
 
     // Ensure no click was caught
-    refute.called(spyA);
+    assert(!spyA.called);
 
     // Move the listeners to the second container
     delegate.root(document.getElementById('container2'));
@@ -464,7 +462,7 @@ describe("domdelgate", function() {
     fireMouseEvent(element, 'click');
 
     // Ensure the click was caught
-    assert.calledOnce(spyA);
+    assert.equal(spyA.callCount, 1);
 
     delegate.off();
   });
@@ -472,7 +470,7 @@ describe("domdelgate", function() {
   it('Regression test: event fired on a text node should bubble normally' , function() {
     var delegate, spy, element, textNode;
 
-    spy = this.spy();
+    spy = sinon.spy();
 
     delegate = new Delegate(document);
     delegate.on('click', '#delegate-test-clickable', spy);
@@ -483,7 +481,7 @@ describe("domdelgate", function() {
 
     fireMouseEvent(textNode, 'click');
 
-    assert.called(spy);
+    assert(spy.called);
 
     delegate.off();
   });
@@ -492,7 +490,7 @@ describe("domdelgate", function() {
   it('Regression test: event listener should be rebound after last event is removed and new events are added.' , function() {
     var delegate, spy, element, textNode;
 
-    spy = this.spy();
+    spy = sinon.spy();
 
     delegate = new Delegate(document);
     delegate.on('click', '#delegate-test-clickable', spy);
@@ -506,7 +504,7 @@ describe("domdelgate", function() {
 
     fireMouseEvent(element, 'click');
 
-    assert.called(spy);
+    assert(spy.called);
 
     delegate.off();
   });
@@ -516,13 +514,13 @@ describe("domdelgate", function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document.body);
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.on('click', null, spy);
 
     element = document.body;
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
 
     delegate.off();
   });
@@ -532,13 +530,13 @@ describe("domdelgate", function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document.body);
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.on('click', spy);
 
     element = document.body;
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
 
     delegate.off();
   });
@@ -547,8 +545,8 @@ describe("domdelgate", function() {
   it('Can unset a listener on the root element when passing the callback into the second parameter', function() {
     var element = document.getElementById('element-in-container2-test-clickable');
     var delegate = new Delegate(document.body);
-    var spy = this.spy();
-    var spy2 = this.spy();
+    var spy = sinon.spy();
+    var spy2 = sinon.spy();
 
     delegate.on('click', spy);
     delegate.on('click', '#element-in-container2-test-clickable', spy2);
@@ -557,8 +555,8 @@ describe("domdelgate", function() {
     delegate.off('click', spy);
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(spy);
-    assert.calledTwice(spy2);
+    assert.equal(spy.callCount, 1);
+    assert.equal(spy2.callCount, 2);
 
     delegate.off();
   });
@@ -567,12 +565,12 @@ describe("domdelgate", function() {
     var delegate, spy, element;
 
     delegate = new Delegate();
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.root(document.body).on('click', null, spy);
 
     element = document.body;
     fireMouseEvent(element, 'click');
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
     delegate.off();
   });
 
@@ -580,44 +578,44 @@ describe("domdelgate", function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document.body);
-    spy = this.spy();
+    spy = sinon.spy();
     delegate.root().on('click', null, spy);
     delegate.root(document.body);
 
     element = document.body;
     fireMouseEvent(element, 'click');
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
     delegate.off();
   });
 
   it('Focus events can be caught', function() {
-    var delegate, spy, element, ev;
+    var delegate, spy, spy2, element, ev;
 
     delegate = new Delegate(document.body);
-    spy = this.spy();
-    spy2 = this.spy();
+    spy = sinon.spy();
+    spy2 = sinon.spy();
     delegate.on('focus', 'input', spy);
     element = document.getElementById('js-input');
     fireFormEvent(element, 'focus');
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
   });
 
   it('Blur events can be caught', function() {
-    var delegate, spy, element, ev;
+    var delegate, spy, spy2, element, ev;
 
     delegate = new Delegate(document.body);
-    spy = this.spy();
-    spy2 = this.spy();
+    spy = sinon.spy();
+    spy2 = sinon.spy();
     delegate.on('blur', 'input', spy);
     element = document.getElementById('js-input');
     fireFormEvent(element, 'blur');
-    assert.calledOnce(spy);
+    assert.equal(spy.callCount, 1);
   });
 
   it('Test setting useCapture true false works get attached to capturing and bubbling event handlers, respectively' , function() {
     var delegate = new Delegate(document);
-    var bubbleSpy = this.spy();
-    var captureSpy = this.spy();
+    var bubbleSpy = sinon.spy();
+    var captureSpy = sinon.spy();
     var bubblePhase;
     var capturePhase;
 
@@ -633,9 +631,9 @@ describe("domdelgate", function() {
     var element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.equals(1, capturePhase);
-    assert.equals(3, bubblePhase);
-    assert.callOrder(captureSpy, bubbleSpy);
+    assert.equal(1, capturePhase);
+    assert.equal(3, bubblePhase);
+    sinon.assert.callOrder(captureSpy, bubbleSpy);
 
     // Ensure unbind works properly
     delegate.off();
@@ -643,8 +641,8 @@ describe("domdelgate", function() {
     element = document.getElementById('delegate-test-clickable');
     fireMouseEvent(element, 'click');
 
-    assert.calledOnce(captureSpy);
-    assert.calledOnce(bubbleSpy);
+    assert.equal(captureSpy.callCount, 1);
+    assert.equal(bubbleSpy.callCount, 1);
   });
 
 });
