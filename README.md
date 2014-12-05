@@ -46,22 +46,18 @@ To instantiate Delegate on the `body` and listen to some events:
 
 
 ## Tests
-Tests are run using [buster](http://docs.busterjs.org/en/latest/) and sit in `test/` directory. To run the tests get yourself [node.js](http://nodejs.org/) and run
+Make sure you have the deps installed
 
     npm install
 
-Then start a buster server
-
-    $ ./node_modules/.bin/buster-server
-    buster-server running on http://localhost:1111
-
-Point your browser to <http://localhost:1111> and capture it, then in another terminal tab run
+Then just run
 
     npm test
 
-Code coverage is generated automatically with [istanbul](https://github.com/gotwarlost/istanbul).  The report outputs to `lcov-report/index.html`.
+If you want to run the tests in a particular browser just run the following and visit the url in your browser.
 
-**NOTE:** This is a pain, and will soon be moving over to another test runner.
+    ./node_modules/zuul/bin/zuul --local 5000 test/test.js    
+
 
 
 ## API
