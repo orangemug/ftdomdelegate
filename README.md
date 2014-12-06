@@ -1,4 +1,4 @@
-# domdelegate [![Build Status](https://travis-ci.org/orangemug/domdelegate.svg?branch=master)](https://travis-ci.org/orangemug/domdelegate)
+# dom-delegate [![Build Status](https://travis-ci.org/orangemug/dom-delegate.svg?branch=master)](https://travis-ci.org/orangemug/dom-delegate)
 
 It's a fork of [ftdomdelegate](https://github.com/ftlabs/ftdomdelegate) with a few extra features planned
 
@@ -8,13 +8,13 @@ It's a fork of [ftdomdelegate](https://github.com/ftlabs/ftdomdelegate) with a f
  * Match the API of other delegate libraries better
 
 
-domdelegate is a simple, easy-to-use component for binding to events on all target elements matching the given selector, irrespective of whether anything exists in the DOM at registration time or not. This allows developers to implement the [event delegation pattern](http://www.sitepoint.com/javascript-event-delegation-is-easier-than-you-think/).
+dom-delegate is a simple, easy-to-use component for binding to events on all target elements matching the given selector, irrespective of whether anything exists in the DOM at registration time or not. This allows developers to implement the [event delegation pattern](http://www.sitepoint.com/javascript-event-delegation-is-easier-than-you-think/).
 
 
 ## Install
 Get the [browserify](http://browserify.org/)-able source from a package manager:
 
-    npm install git://github.com/orangemug/domdelegate.git
+    npm install git://github.com/orangemug/dom-delegate.git
 
 
 ## Usage
