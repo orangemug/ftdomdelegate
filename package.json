@@ -7,7 +7,7 @@
     "Sam Giles",
     "Matt Andrews"
   ],
-  "main": "./index.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/ftlabs/ftdomdelegate.git"
