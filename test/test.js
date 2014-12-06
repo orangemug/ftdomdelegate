@@ -669,68 +669,44 @@ suite("domdelgate", function() {
       el.parentNode.removeChild(el);
     });
 
-    // test('Test scroll event', function(done) {
-    //   var promise = {
-    //     then: function (callback) {
-    //       this.callbacks = this.callbacks || [];
-    //       this.callbacks.push(callback);
-    //     }
-    //   };
+    test('Test scroll event', function(done) {
+      var delegate = new Delegate(document);
+      var windowDelegate = new Delegate(window);
+      var spyA = sinon.spy();
+      var spyB = sinon.spy();
+      delegate.on('scroll', spyA);
+      windowDelegate.on('scroll', spyB);
 
-    //   var delegate = new Delegate(document);
-    //   var windowDelegate = new Delegate(window);
-    //   var spyA = sinon.spy();
-    //   var spyB = sinon.spy();
-    //   delegate.on('scroll', spyA);
-    //   windowDelegate.on('scroll', spyB);
+      // Scroll events on some browsers are asynchronous
+      window.setTimeout(function() {
+        assert.equal(spyA.callCount, 1);
+        assert.equal(spyB.callCount, 1);
+        delegate.destroy();
+        windowDelegate.destroy();
+        done();
+      }, 100);
+      window.scrollTo(0, 100);
+    });
 
-    //   // Scroll events on some browsers are asynchronous
-    //   window.setTimeout(function() {
-    //     assert.equal(spyA.callCount, 1);
-    //     assert.equal(spyB.callCount, 1);
-    //     delegate.destroy();
-    //     windowDelegate.destroy();
+    test('Test sub-div scrolling', function(done) {
+      var delegate = new Delegate(document);
+      var el = document.getElementById('el');
+      el.style.height = '100px';
+      el.style.overflow = 'scroll';
 
-    //     callbacks = promise.callbacks || [];
-    //     for (var i = 0, l = callbacks.length; i < l; ++i) {
-    //       callbacks[i]();
-    //     }
-    //     done();
-    //   }, 100);
-    //   window.scrollTo(0, 100);
-    // });
+      var spyA = sinon.spy();
+      delegate.on('scroll', '#el', spyA);
 
-    // test('Test sub-div scrolling', function() {
-    //   var promise = {
-    //     then: function (callback) {
-    //       this.callbacks = this.callbacks || [];
-    //       this.callbacks.push(callback);
-    //     }
-    //   };
-
-    //   var delegate = new Delegate(document);
-    //   var el = document.getElementById('el');
-    //   el.style.height = '100px';
-    //   el.style.overflow = 'scroll';
-
-    //   var spyA = sinon.spy();
-    //   delegate.on('scroll', '#el', spyA);
-
-    //   // Scroll events on some browsers are asynchronous
-    //   window.setTimeout(function() {
-    //     assert.equal(spyA.callCount, 1);
-    //     delegate.destroy();
-
-    //     callbacks = promise.callbacks || [];
-    //     for (var i = 0, l = callbacks.length; i < l; ++i) {
-    //       callbacks[i]();
-    //     }
-    //   }, 100);
-    //   var event = document.createEvent("MouseEvents");
-    //   event.initMouseEvent('scroll', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    //   el.dispatchEvent(event);
-    //   return promise;
-    // });
+      // Scroll events on some browsers are asynchronous
+      window.setTimeout(function() {
+        assert.equal(spyA.callCount, 1);
+        delegate.destroy();
+        done();
+      }, 100);
+      var event = document.createEvent("MouseEvents");
+      event.initMouseEvent('scroll', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      el.dispatchEvent(event);
+    });
   });
 
 });
