@@ -3,9 +3,9 @@
 It's a fork of [ftdomdelegate](https://github.com/ftlabs/ftdomdelegate) with a few extra features planned
 
  * [done] Scoped selectors
- * Moving away from buster to mocha
- * Match the API of other delegate libraries better
+ * [done] Moving away from buster to mocha
  * Proof that its tested in the browsers listed (saucelabs)
+ * Match the API of other delegate libraries better
 
 
 domdelegate is a simple, easy-to-use component for binding to events on all target elements matching the given selector, irrespective of whether anything exists in the DOM at registration time or not. This allows developers to implement the [event delegation pattern](http://www.sitepoint.com/javascript-event-delegation-is-easier-than-you-think/).
