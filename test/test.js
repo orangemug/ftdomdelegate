@@ -9,8 +9,8 @@ require("polyfill-function-prototype-bind");
 var fireMouseEvent = require("./helpers/fire-mouse-event");
 var fireFormEvent  = require("./helpers/fire-form-event");
 
-describe("domdelgate", function() {
-  beforeEach(function() {
+suite("domdelgate", function() {
+  setup(function() {
     document.body.insertAdjacentHTML('beforeend',
       '<div id="container1">'
         + '<div id="delegate-test-clickable" class="delegate-test-clickable">'
@@ -27,7 +27,7 @@ describe("domdelgate", function() {
     );
   });
 
-  afterEach(function() {
+  teardown(function() {
     var toRemove;
     toRemove = document.getElementById('container1');
     if (toRemove) {
@@ -40,7 +40,7 @@ describe("domdelgate", function() {
   });
 
 
-  it('Delegate#off should remove the event handlers for a selector', function() {
+  test('Delegate#off should remove the event handlers for a selector', function() {
     var delegate = new Delegate(document);
     var spyA = sinon.spy()
     var spyB = sinon.spy();
@@ -63,7 +63,7 @@ describe("domdelgate", function() {
     assert.equal(spyB.callCount, 1);
   });
 
-  it('ID selectors are supported', function() {
+  test('ID selectors are supported', function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
@@ -78,7 +78,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Destroy destroys', function() {
+  test('Destroy destroys', function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
@@ -93,7 +93,7 @@ describe("domdelgate", function() {
     assert(!spy.called);
   });
 
-  it('Tag selectors are supported', function() {
+  test('Tag selectors are supported', function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
@@ -111,7 +111,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Tag selectors are supported for svg', function() {
+  test('Tag selectors are supported for svg', function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
@@ -129,7 +129,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Scoped direct children selectors are supported', function() {
+  test('Scoped direct children selectors are supported', function() {
     var delegate, spy1, spy2, element;
     var containerEl = document.getElementById("container1");
 
@@ -157,7 +157,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Scoped selector changing root', function() {
+  test('Scoped selector changing root', function() {
     var delegate, spy, element;
     var container1El = document.getElementById("container1");
     var container2El = document.getElementById("container2");
@@ -182,7 +182,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Class name selectors are supported' , function() {
+  test('Class name selectors are supported' , function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document);
@@ -197,7 +197,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Complex selectors are supported' , function() {
+  test('Complex selectors are supported' , function() {
     var delegate, spyA, spyB, element;
 
     delegate = new Delegate(document);
@@ -214,7 +214,7 @@ describe("domdelgate", function() {
 
     delegate.off();
   });
-  it('If two click handlers are registered then all handlers should be called on click' , function() {
+  test('If two click handlers are registered then all handlers should be called on click' , function() {
     var delegate = new Delegate(document);
     var spyA = sinon.spy(), spyB = sinon.spy();
 
@@ -230,7 +230,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Returning false from a callback should stop propagation immediately', function() {
+  test('Returning false from a callback should stop propagation immediately', function() {
     var delegate = new Delegate(document);
 
     var spyA = sinon.spy(), spyB = sinon.spy();
@@ -252,7 +252,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Returning false from a callback should preventDefault', function(done) {
+  test('Returning false from a callback should preventDefault', function(done) {
     var delegate = new Delegate(document.body);
 
     var spyA = sinon.spy();
@@ -282,7 +282,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Returning false from a callback should stop propagation globally', function() {
+  test('Returning false from a callback should stop propagation globally', function() {
     var delegateA = new Delegate(document), delegateB = new Delegate(document);
 
     var spyA = sinon.spy(), spyB = sinon.spy();
@@ -305,7 +305,7 @@ describe("domdelgate", function() {
     delegateB.off();
   });
 
-  it('Clicking on parent node should not trigger event' , function() {
+  test('Clicking on parent node should not trigger event' , function() {
     var delegate = new Delegate(document);
     var spy = sinon.spy();
 
@@ -328,7 +328,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Exception should be thrown when no handler is specified in Delegate#on' , function() {
+  test('Exception should be thrown when no handler is specified in Delegate#on' , function() {
 
     try {
       var delegate = new Delegate(document);
@@ -339,7 +339,7 @@ describe("domdelgate", function() {
     }
   });
 
-  it('Delegate#off with zero arguments should remove all handlers' , function() {
+  test('Delegate#off with zero arguments should remove all handlers' , function() {
     var delegate = new Delegate(document);
     var spyA = sinon.spy(), spyB = sinon.spy();
 
@@ -367,7 +367,7 @@ describe("domdelgate", function() {
     assert(!spyB.called);
   });
 
-  it('Regression test: Delegate#off called from a callback should succeed without exception' , function() {
+  test('Regression test: Delegate#off called from a callback should succeed without exception' , function() {
     var delegate = new Delegate(document);
     var spyA = sinon.spy();
 
@@ -382,7 +382,7 @@ describe("domdelgate", function() {
     assert(spyA.called);
   });
 
-  it('Delegate#off called from a callback should prevent execution of subsequent callbacks' , function() {
+  test('Delegate#off called from a callback should prevent execution of subsequent callbacks' , function() {
     var delegate = new Delegate(document);
     var spyA = sinon.spy(), spyB = sinon.spy();
 
@@ -400,7 +400,7 @@ describe("domdelgate", function() {
     assert(!spyB.called);
   });
 
-  it('Can be instantiated without a root node' , function() {
+  test('Can be instantiated without a root node' , function() {
     var delegate = new Delegate();
     var spyA = sinon.spy();
     var element = document.getElementById('delegate-test-clickable');
@@ -414,7 +414,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Can be bound to an element after its event listeners have been set up' , function() {
+  test('Can be bound to an element after its event listeners have been set up' , function() {
     var delegate = new Delegate();
     var spyA = sinon.spy();
     var element = document.getElementById('delegate-test-clickable');
@@ -430,7 +430,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Can be unbound from an element' , function() {
+  test('Can be unbound from an element' , function() {
     var delegate = new Delegate(document);
     var spyA = sinon.spy();
     var element = document.getElementById('delegate-test-clickable');
@@ -445,7 +445,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Can be to bound to a different DOM element', function () {
+  test('Can be to bound to a different DOM element', function () {
     var spyA = sinon.spy();
     var element = document.getElementById('element-in-container2-test-clickable');
 
@@ -475,7 +475,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Regression test: event fired on a text node should bubble normally' , function() {
+  test('Regression test: event fired on a text node should bubble normally' , function() {
     var delegate, spy, element, textNode;
 
     spy = sinon.spy();
@@ -495,7 +495,7 @@ describe("domdelgate", function() {
   });
 
   // Regression test for - https://github.com/ftlabs/dom-delegate/pull/10
-  it('Regression test: event listener should be rebound after last event is removed and new events are added.' , function() {
+  test('Regression test: event listener should be rebound after last event is removed and new events are added.' , function() {
     var delegate, spy, element, textNode;
 
     spy = sinon.spy();
@@ -518,7 +518,7 @@ describe("domdelgate", function() {
   });
 
   // Test for issue #5
-  it('The root element, via a null selector, is supported', function() {
+  test('The root element, via a null selector, is supported', function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document.body);
@@ -534,7 +534,7 @@ describe("domdelgate", function() {
   });
 
   // Test for issues #16
-  it('The root element, when passing a callback into the second parameter, is supported', function() {
+  test('The root element, when passing a callback into the second parameter, is supported', function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document.body);
@@ -550,7 +550,7 @@ describe("domdelgate", function() {
   });
 
   // Test for issue #16
-  it('Can unset a listener on the root element when passing the callback into the second parameter', function() {
+  test('Can unset a listener on the root element when passing the callback into the second parameter', function() {
     var element = document.getElementById('element-in-container2-test-clickable');
     var delegate = new Delegate(document.body);
     var spy = sinon.spy();
@@ -569,7 +569,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Regression test: #root is chainable during setting of root', function() {
+  test('Regression test: #root is chainable during setting of root', function() {
     var delegate, spy, element;
 
     delegate = new Delegate();
@@ -582,7 +582,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Regression test: #root is chainable during unsetting of root', function() {
+  test('Regression test: #root is chainable during unsetting of root', function() {
     var delegate, spy, element;
 
     delegate = new Delegate(document.body);
@@ -596,7 +596,7 @@ describe("domdelgate", function() {
     delegate.off();
   });
 
-  it('Focus events can be caught', function() {
+  test('Focus events can be caught', function() {
     var delegate, spy, spy2, element, ev;
 
     delegate = new Delegate(document.body);
@@ -608,7 +608,7 @@ describe("domdelgate", function() {
     assert.equal(spy.callCount, 1);
   });
 
-  it('Blur events can be caught', function() {
+  test('Blur events can be caught', function() {
     var delegate, spy, spy2, element, ev;
 
     delegate = new Delegate(document.body);
@@ -620,7 +620,7 @@ describe("domdelgate", function() {
     assert.equal(spy.callCount, 1);
   });
 
-  it('Test setting useCapture true false works get attached to capturing and bubbling event handlers, respectively' , function() {
+  test('Test setting useCapture true false works get attached to capturing and bubbling event handlers, respectively' , function() {
     var delegate = new Delegate(document);
     var bubbleSpy = sinon.spy();
     var captureSpy = sinon.spy();
@@ -653,8 +653,8 @@ describe("domdelgate", function() {
     assert.equal(bubbleSpy.callCount, 1);
   });
 
-  describe("scroll", function() {
-    beforeEach(function() {
+  suite("scroll", function() {
+    setup(function() {
       var snip = '<p>text</p>';
       var out = '';
       for (var i = 0, l = 10000; i < l; i++) {
@@ -664,12 +664,12 @@ describe("domdelgate", function() {
       window.scrollTo(0, 0);
     });
 
-    afterEach(function() {
+    teardown(function() {
       var el = document.getElementById('el');
       el.parentNode.removeChild(el);
     });
 
-    // it('Test scroll event', function(done) {
+    // test('Test scroll event', function(done) {
     //   var promise = {
     //     then: function (callback) {
     //       this.callbacks = this.callbacks || [];
@@ -700,7 +700,7 @@ describe("domdelgate", function() {
     //   window.scrollTo(0, 100);
     // });
 
-    // it('Test sub-div scrolling', function() {
+    // test('Test sub-div scrolling', function() {
     //   var promise = {
     //     then: function (callback) {
     //       this.callbacks = this.callbacks || [];
