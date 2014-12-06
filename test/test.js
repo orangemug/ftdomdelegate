@@ -37,6 +37,10 @@ suite("domdelgate", function() {
     if (toRemove) {
       toRemove.parentNode.removeChild(toRemove);
     }
+    toRemove = document.querySelector('svg');
+    if (toRemove) {
+      toRemove.parentNode.removeChild(toRemove);
+    }
   });
 
 
