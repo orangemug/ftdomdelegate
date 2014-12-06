@@ -7,6 +7,11 @@ It's a fork of [ftdomdelegate](https://github.com/ftlabs/ftdomdelegate) with a f
  * Proof that its tested in the browsers listed (saucelabs)
  * Match the API of other delegate libraries better
 
+Whats been lost (but will come back in a future version)
+
+ * Code coverage
+ * Standalone script (only bower/npm packages at the moment)
+
 
 dom-delegate is a simple, easy-to-use component for binding to events on all target elements matching the given selector, irrespective of whether anything exists in the DOM at registration time or not. This allows developers to implement the [event delegation pattern](http://www.sitepoint.com/javascript-event-delegation-is-easier-than-you-think/).
 
