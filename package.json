@@ -26,6 +26,7 @@
   ],
   "devDependencies": {
     "mocha": "^2.0.1",
+    "phantomjs": "^1.9.12",
     "polyfill-function-prototype-bind": "0.0.1",
     "sinon": "^1.12.1",
     "zuul": "^1.15.2"

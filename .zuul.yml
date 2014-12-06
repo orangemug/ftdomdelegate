@@ -1,4 +1,4 @@
-ui: mocha-bdd
+ui: mocha-tdd
 browsers:
   - name: firefox
     platform: linux
