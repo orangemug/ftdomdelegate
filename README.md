@@ -3,7 +3,7 @@
 It's a fork of [ftdomdelegate](https://github.com/ftlabs/ftdomdelegate) with a few extra features planned
 
  * [done] Scoped selectors
- * [done] Moving away from buster to mocha
+ * [done] Moving away from buster to mocha/zuul
  * Proof that its tested in the browsers listed (saucelabs)
  * Match the API of other delegate libraries better
 
@@ -18,13 +18,9 @@ Get the [browserify](http://browserify.org/)-able source from a package manager:
 
 
 ## Usage
-The library is written in CommonJS and so can either be `require` in or the prebuilt wzrd.in version can be used, which makes the API available via `window.domDelegate.Delegate`.
+To instantiate `Delegate` on the `body` and listen to some events
 
-    var Delegate = require('dom-delegate').Delegate;
-
-The script must be loaded prior to instantiating a Delegate object.
-
-To instantiate Delegate on the `body` and listen to some events:
+    var Delegate = require('dom-delegate');
 
     function handleButtonClicks(event) {
       // Do some things
@@ -34,14 +30,13 @@ To instantiate Delegate on the `body` and listen to some events:
       // Do some other things
     }
 
-    window.addEventListener('load', function() {
+    document.addEventListener("DOMContentLoaded", function() {
       var delegate = new Delegate(document.body);
       delegate.on('click', 'button', handleButtonClicks);
 
       // Listen to all touch move
       // events that reach the body
       delegate.on('touchmove', handleTouchMove);
-
     }, false);
 
 
