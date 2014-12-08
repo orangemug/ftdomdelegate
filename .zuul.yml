@@ -1,7 +1,14 @@
 ui: mocha-tdd
 browsers:
   - name: firefox
-    platform: linux
-    version: 30..latest
+    version: latest
   - name: chrome
-    version: 30..beta
+    version: latest
+  - name: ie
+    version: 8..latest
+  - name: iphone
+    version: 5.1..latest
+  - name: opera
+    version: [12, latest]
+  - name: safari
+    version: 6..latest

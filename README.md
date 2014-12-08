@@ -1,4 +1,6 @@
-# dom-delegate [![Build Status](https://travis-ci.org/orangemug/dom-delegate.svg?branch=master)](https://travis-ci.org/orangemug/dom-delegate)
+# dom-delegate [![Build Status](https://travis-ci.org/orangemug/dom-delegate.svg?branch=master)](https:/travis-ci.org/orangemug/dom-delegate)
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/orangemug_github.svg)](https://saucelabs.com/u/orangemug_github)
 
 It's a fork of [ftdomdelegate](https://github.com/ftlabs/ftdomdelegate) with a few extra features planned
 

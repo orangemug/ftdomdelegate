@@ -16,7 +16,8 @@
     "node": "*"
   },
   "scripts": {
-    "test": "./node_modules/zuul/bin/zuul --phantom -- test/test.js"
+    "test": "./node_modules/zuul/bin/zuul -- test/test.js",
+    "test-local": "./node_modules/zuul/bin/zuul --phantom -- test/test.js"
   },
   "keywords": [
     "delegate",
