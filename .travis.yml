@@ -1,12 +1,13 @@
 script:
-  - "export DISPLAY=:99.0"
-  - "npm test"
-
+- export DISPLAY=:99.0
+- npm test
 language: node_js
-
 node_js:
-  - "0.10"
-
+- '0.10'
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+env:
+  global:
+  - secure: Q73bM6yG08FIPEUx36wbX6iz84ZzunfRhM3t6Ib0o28+Yz8TxUUPoiX+vgdkmp063MGTJgUaEup1QsFfKBN5MTbM1570AQ5Lk1DRXkyfUiC8lyC5zED15p5/VdtzMO1W9LHRfoGaSV8UjqqmOtplRzhy1LI5QwbynW3aSrl6a20=
+  - secure: eMm380MGUq0xkdan7bPKKbQMfTEGQFS03cd/vZixbZQbKsUsbRDZ181N/00AcBlH5fbdnurhW33mdPiBk/+ftBLuhoHD5fKybo0x9UEvj52+leF+zAsiydeFnvUzqMiqPZ1dcrjySrfZcVcQX6emHavEIGdkszhgTnGAVtvbqp4=
