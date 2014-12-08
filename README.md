@@ -54,7 +54,7 @@ Make sure you have the deps installed
 
 Then just run
 
-    npm test
+    npm run-script test-local
 
 If you want to run the tests in a particular browser just run the following and visit the url in your browser.
 
