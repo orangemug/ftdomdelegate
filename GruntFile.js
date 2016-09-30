@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         dest: 'build/<%= pkg.name %>.js'
       },
       options: {
-        standalone: ['Delegate', 'domDelegate']
+        standalone: ['domDelegate']
       }
     },
 
