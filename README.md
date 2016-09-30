@@ -38,7 +38,7 @@ bower install dom-delegate
 
 or
 
-Download the [minified](https://unpkg.com/dom-delegate@latest/build/dom-delegate.min.js) or [unminified](https://unpkg.com/dom-delegate@latest/build/dom-delegate.js) files.  (Note: this exposes the API via `window.Delegate`)
+Download the [minified](https://unpkg.com/dom-delegate@latest/build/dom-delegate.min.js) or [unminified](https://unpkg.com/dom-delegate@latest/build/dom-delegate.js) files.  (Note: this exposes the API via `window.domDelegate.Delegate`)
 
 ## Usage ##
 
