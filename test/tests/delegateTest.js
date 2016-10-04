@@ -21,6 +21,12 @@ setupHelper.setUp = function() {
     + '</svg>'
     + '<button disabled="true" id="btn-disabled">Normal</button>'
     + '<button disabled="true" id="btn-disabled-alt"><i id="btn-disabled-alt-label">With label</i></button>'
+    + '<div id="cap-node0">'
+      + '<div id="cap-node1">'
+        + '<div id="cap-node2">'
+        + '</div>'
+      + '</div>'
+    + '</div>'
   );
 };
 
@@ -625,6 +631,34 @@ buster.testCase('Delegate', {
 
     setupHelper.fireMouseEvent(element, "click");
     refute.called(spy);
+  },
+
+  'Capture fires in correct order' : function() {
+    var delegate = new Delegate(document);
+    var spyDelegate0 = this.spy();
+    var spyDelegate1 = this.spy();
+    var spyDelegate2 = this.spy();
+
+    var spyNative0 = this.spy();
+    var spyNative1 = this.spy();
+    var spyNative2 = this.spy();
+
+    var el0 = document.getElementById("cap-node0");
+    var el1 = document.getElementById("cap-node1");
+    var el2 = document.getElementById("cap-node2");
+
+    el0.addEventListener("click", spyNative0, true);
+    el1.addEventListener("click", spyNative1, true);
+    el2.addEventListener("click", spyNative2, true);
+
+    delegate.on('click', '#cap-node0', spyDelegate0, true);
+    delegate.on('click', '#cap-node1', spyDelegate1, true);
+    delegate.on('click', '#cap-node2', spyDelegate2, true);
+
+    setupHelper.fireMouseEvent(el2, "click");
+
+    assert.callOrder(spyNative0, spyNative1, spyNative2);
+    assert.callOrder(spyDelegate0, spyDelegate1, spyDelegate2);
   },
 
   'tearDown': function() {
